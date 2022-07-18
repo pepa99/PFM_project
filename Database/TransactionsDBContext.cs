@@ -20,6 +20,8 @@ namespace PFM_project.Database.Repositories
         public DbSet<TransactionsEntity> Transactions {get;set;}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

@@ -1,4 +1,4 @@
-namespace PFM_project.Models
+namespace PFM_project.Database.Entities
 {
     public enum TransactionKind
     {
