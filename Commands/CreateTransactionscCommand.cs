@@ -8,14 +8,18 @@ namespace PFM_project.Command
     {
         [Required]
         public string id{get;set;}
-        [Required]
+        
         public string beneficiaryname{get;set;}
         [Required]
-        public string date{get;set;}
+        public DateTime date{get;set;}
+        [Required]
         public Directions? Directions{get;set;}  
+        [Required]
         public double amount{get;set;}
         public string description{get;set;}
+        [Required]
         public string currency{get;set;}
+        [Required]
         public TransactionKind TransactionKind{get;set;}
         public string catcode{get;}
         public int mcc{get;set;}

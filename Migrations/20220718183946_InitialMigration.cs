@@ -14,7 +14,7 @@ namespace PFMproject.Migrations
                 {
                     id = table.Column<string>(type: "text", nullable: false),
                     beneficiaryname = table.Column<string>(type: "text", nullable: true),
-                    date = table.Column<string>(type: "text", nullable: false),
+                    date = table.Column<string>(type: "DateTime", nullable: false),
                     Directions = table.Column<int>(type: "integer", nullable: false),
                     amount = table.Column<double>(type: "double precision", nullable: false),
                     description = table.Column<string>(type: "text", nullable: true),

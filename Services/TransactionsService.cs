@@ -29,9 +29,9 @@ namespace PFM_project.Services
             return _mapper.Map<Models.Transactions>(result);
         }
 
-        public async Task<PagedSortedList<Models.Transactions>> GetProducts(int page = 1, int pageSize = 10, string sortBy = null, SortOrder sortOrder = SortOrder.Asc)
+        public async Task<PagedSortedList<Models.Transactions>> GetProducts(TransactionKind kind,int page = 1, int pageSize = 10, string sortBy = null, SortOrder sortOrder = SortOrder.Asc)
         {
-           var result = await _transactionsRepository.List(page, pageSize, sortBy, sortOrder);
+           var result = await _transactionsRepository.List(kind,page, pageSize, sortBy, sortOrder);
 
             return _mapper.Map<PagedSortedList<Models.Transactions>>(result);        }
     }

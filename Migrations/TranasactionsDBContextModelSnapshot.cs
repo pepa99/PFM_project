@@ -48,7 +48,7 @@ namespace PFMproject.Migrations
 
                     b.Property<string>("date")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("DateTime");
 
                     b.Property<string>("description")
                         .HasColumnType("text");

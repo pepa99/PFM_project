@@ -17,16 +17,17 @@ namespace PFM_project.Database.Repositories
 
             await _context.SaveChangesAsync();
 
-            return product;        }
+            return product;        
+        }
 
         public async Task<TransactionsEntity> Get(string id)
         {
             return await _context.Transactions.FirstOrDefaultAsync(p => p.id == id);
         }
 
-        public async Task<PagedSortedList<TransactionsEntity>> List(int page = 1, int pageSize = 5, string sortBy = null, SortOrder sortOrder = SortOrder.Asc)
+        public async Task<PagedSortedList<TransactionsEntity>> List(TransactionKind kind, int page = 1, int pageSize = 5, string sortBy = null, SortOrder sortOrder = SortOrder.Asc)
         {
-                        var query = _context.Transactions.AsQueryable();
+            var query = _context.Transactions.Where(p => p.Kind == kind).AsQueryable();
 
             var totalCount = query.Count();
 
