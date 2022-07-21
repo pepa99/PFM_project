@@ -9,10 +9,10 @@ namespace PFM_project.Mappings
     {
         public AutoMapperProfile()
         {
-            CreateMap<TransactionsEntity, PFM_project.Models.Transactions>()
+            CreateMap<TransactionsEntity, PFM_project.Models.Transaction>()
                 .ForMember(d => d.id, opts => opts.MapFrom(s => s.id));
 
-            CreateMap<PagedSortedList<TransactionsEntity>, PagedSortedList<PFM_project.Models.Transactions>>();
+            CreateMap<PagedSortedList<TransactionsEntity>, PagedSortedList<PFM_project.Models.Transaction>>();
             
             CreateMap<CreateTransactionsCommand, TransactionsEntity>()
                 .ForMember(d => d.id, opts => opts.MapFrom(s => s.id));

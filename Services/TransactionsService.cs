@@ -15,7 +15,7 @@ namespace PFM_project.Services
             _transactionsRepository = transactionsRepository;
             _mapper = mapper;
         }
-        public async Task<Transactions> CreateTransactions(CreateTransactionsCommand command)
+        public async Task<Transaction> CreateTransactions(CreateTransactionsCommand command)
         {
             var entity = _mapper.Map<TransactionsEntity>(command);
 
@@ -26,13 +26,13 @@ namespace PFM_project.Services
             }
             var result = await _transactionsRepository.Create(entity);
 
-            return _mapper.Map<Models.Transactions>(result);
+            return _mapper.Map<Models.Transaction>(result);
         }
 
-        public async Task<PagedSortedList<Models.Transactions>> GetProducts(TransactionKind kind,int page = 1, int pageSize = 10, string sortBy = null, SortOrder sortOrder = SortOrder.Asc)
+        public async Task<PagedSortedList<Models.Transaction>> GetProducts(TransactionKind kind,DateOnly start, DateOnly end, int page = 1, int pageSize = 10, string sortBy = null, SortOrder sortOrder = SortOrder.Asc)
         {
-           var result = await _transactionsRepository.List(kind,page, pageSize, sortBy, sortOrder);
+           var result = await _transactionsRepository.List(kind,start, end,page, pageSize, sortBy, sortOrder);
 
-            return _mapper.Map<PagedSortedList<Models.Transactions>>(result);        }
+            return _mapper.Map<PagedSortedList<Models.Transaction>>(result);        }
     }
 }

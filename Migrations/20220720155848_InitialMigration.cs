@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -14,7 +15,7 @@ namespace PFMproject.Migrations
                 {
                     id = table.Column<string>(type: "text", nullable: false),
                     beneficiaryname = table.Column<string>(type: "text", nullable: true),
-                    date = table.Column<string>(type: "DateTime", nullable: false),
+                    date = table.Column<DateOnly>(type: "date", nullable: false),
                     Directions = table.Column<int>(type: "integer", nullable: false),
                     amount = table.Column<double>(type: "double precision", nullable: false),
                     description = table.Column<string>(type: "text", nullable: true),

@@ -11,7 +11,7 @@ namespace PFM_project.Command
         
         public string beneficiaryname{get;set;}
         [Required]
-        public DateTime date{get;set;}
+        public DateOnly date{get;set;}
         [Required]
         public Directions? Directions{get;set;}  
         [Required]
@@ -20,8 +20,7 @@ namespace PFM_project.Command
         [Required]
         public string currency{get;set;}
         [Required]
+        public MccCodeEnum mcc{get;set;}
         public TransactionKind TransactionKind{get;set;}
-        public string catcode{get;}
-        public int mcc{get;set;}
     }
 }

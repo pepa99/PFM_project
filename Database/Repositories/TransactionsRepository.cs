@@ -25,9 +25,9 @@ namespace PFM_project.Database.Repositories
             return await _context.Transactions.FirstOrDefaultAsync(p => p.id == id);
         }
 
-        public async Task<PagedSortedList<TransactionsEntity>> List(TransactionKind kind, int page = 1, int pageSize = 5, string sortBy = null, SortOrder sortOrder = SortOrder.Asc)
+        public async Task<PagedSortedList<TransactionsEntity>> List(TransactionKind kind,DateOnly start, DateOnly end, int page = 1, int pageSize = 5, string sortBy = null, SortOrder sortOrder = SortOrder.Asc)
         {
-            var query = _context.Transactions.Where(p => p.Kind == kind).AsQueryable();
+            var query = _context.Transactions.Where(p => p.Kind == kind && start<=p.date && p.date<=end).AsQueryable();
 
             var totalCount = query.Count();
 

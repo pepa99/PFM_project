@@ -7,8 +7,7 @@ using PFM_project.Services;
 using PFM_project.Database;
 using Npgsql;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-
-
+using Microsoft.Extensions.DependencyInjection;
 
 namespace PFM_project
 {
@@ -33,6 +32,7 @@ public class Program
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             });
+        //builder.Services.AddControllers().AddApplicationPart();    
    
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
