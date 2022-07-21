@@ -21,7 +21,6 @@ namespace PFMproject.Migrations
                     description = table.Column<string>(type: "text", nullable: true),
                     currency = table.Column<string>(type: "character varying(3)", maxLength: 3, nullable: false),
                     Kind = table.Column<int>(type: "integer", nullable: false),
-                    catcode = table.Column<string>(type: "text", nullable: true),
                     mcc = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

@@ -42,39 +42,46 @@ public class TransactionsController : ControllerBase
 
 
     [HttpPost]
-    [Consumes("application/csv")]
-    public async Task<IActionResult> CreateProduct([FromForm] IFormFile file)
-    {       
-
-        var result = new List<string>();
-        var reader= new StreamReader(file.OpenReadStream());
-        string line="";
-        while((line=reader.ReadLine())!=null)
-        {
-            result.Add(line);
-        }
+    [Consumes("text/csv")]
+    public async Task<IActionResult> CreateProduct()
+    {  
+        StreamReader reader=  new StreamReader(Request.Body);
+        List<string> result= new List<string>();
         int i=0;
+        string line="";
+        while ((line = await reader.ReadLineAsync()) != null)
+                {
+                    i+=1;
+                    result.Add(line);
+                }
+        var j=0;   
         foreach(string elem in result)
         {
-            i+=1;
-            if(i==1)
+            j+=1;
+            if(j<6)
             {
                 continue;
             }
             CreateTransactionsCommand command=new CreateTransactionsCommand();
             string[] lista=elem.Split(",");
-            command.id=lista[0];
-            command.beneficiaryname=lista[1];
+            try{
+            command.id="1";
+            command.beneficiaryname="nam1";
             command.date=DateOnly.Parse(lista[2]);
             command.Directions=Directions.d;
-            command.amount=Int32.Parse(lista[4]);
-            command.description=lista[5];
-            command.currency=lista[6];
+            command.amount=1.20;
+            command.description="opis";
+            command.currency="USD";
             command.mcc=MccCodeEnum.NUMBER_4814;
             command.TransactionKind=TransactionKind.dep;
-            var result1 = await _transactionsService.CreateTransactions(command);
-            return Ok(result1);
-
+             var result1 = await _transactionsService.CreateTransactions(command);
+            }
+            catch(Exception e)
+            {
+                
+                return BadRequest();
+            }
+           
         }
         return Ok();
     }

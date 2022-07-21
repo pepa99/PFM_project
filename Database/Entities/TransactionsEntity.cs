@@ -11,7 +11,6 @@ namespace PFM_project.Database.Entities
         public string description{get;set;}
         public string currency{get;set;}
         public TransactionKind Kind{get;set;}
-        public string catcode{get;set;}
         public MccCodeEnum mcc{get;set;}
     }
 }

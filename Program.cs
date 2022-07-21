@@ -32,6 +32,8 @@ public class Program
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             });
+         builder.Services.AddControllers().AddXmlDataContractSerializerFormatters();
+   
         //builder.Services.AddControllers().AddApplicationPart();    
    
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -12,7 +12,7 @@ using PFM_project.Database.Repositories;
 namespace PFMproject.Migrations
 {
     [DbContext(typeof(TranasactionsDBContext))]
-    [Migration("20220720155848_InitialMigration")]
+    [Migration("20220721200434_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,9 +39,6 @@ namespace PFMproject.Migrations
                         .HasColumnType("double precision");
 
                     b.Property<string>("beneficiaryname")
-                        .HasColumnType("text");
-
-                    b.Property<string>("catcode")
                         .HasColumnType("text");
 
                     b.Property<string>("currency")

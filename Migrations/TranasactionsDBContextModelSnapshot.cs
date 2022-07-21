@@ -39,9 +39,6 @@ namespace PFMproject.Migrations
                     b.Property<string>("beneficiaryname")
                         .HasColumnType("text");
 
-                    b.Property<string>("catcode")
-                        .HasColumnType("text");
-
                     b.Property<string>("currency")
                         .IsRequired()
                         .HasMaxLength(3)

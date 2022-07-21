@@ -19,7 +19,6 @@ namespace PFM_project.Database.Configuration
             builder.Property(p=>p.Kind).IsRequired();
             builder.Property(p=>p.currency).IsRequired().HasMaxLength(3);
             builder.Property(p=>p.mcc);
-            builder.Property(p=>p.catcode);
             builder.Property(p=>p.description);
             
         }
