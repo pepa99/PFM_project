@@ -1,5 +1,5 @@
 using AutoMapper;
-using PFM_project.Command;
+using PFM_project.Commands;
 using PFM_project.Database.Entities;
 using PFM_project.Models;
 
@@ -9,6 +9,8 @@ namespace PFM_project.Mappings
     {
         public AutoMapperProfile()
         {
+            CreateMap<CategoryEntity, Category>()
+                .ForMember(d => d.code, opts => opts.MapFrom(s => s.code));
             CreateMap<TransactionsEntity, PFM_project.Models.Transaction>()
                 .ForMember(d => d.id, opts => opts.MapFrom(s => s.id));
 
@@ -16,6 +18,9 @@ namespace PFM_project.Mappings
             
             CreateMap<CreateTransactionsCommand, TransactionsEntity>()
                 .ForMember(d => d.id, opts => opts.MapFrom(s => s.id));
+            CreateMap<CategoryCsv,CategoryEntity>()
+                .ForMember(d => d.code, opts => opts.MapFrom(s => s.code));
+            
         }
     }
 }

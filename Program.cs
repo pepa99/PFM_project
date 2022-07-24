@@ -19,7 +19,9 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddScoped<ITransactionsService, TransactionsService>();
+        builder.Services.AddScoped<ICategoryService,CategoryService>();
         builder.Services.AddScoped<ITransactionsRepository, TransactionRepository>();
+        builder.Services.AddScoped<ICategoriesRepository,CategoriesRepository>();
         builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         builder.Services.AddDbContext<TranasactionsDBContext>(options =>
@@ -39,7 +41,7 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
+        AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", true);
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

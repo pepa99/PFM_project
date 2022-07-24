@@ -22,16 +22,34 @@ namespace PFMproject.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("PFM_project.Database.Entities.CategoryEntity", b =>
+                {
+                    b.Property<string>("code")
+                        .HasColumnType("text");
+
+                    b.Property<string>("name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("parent_code")
+                        .HasColumnType("text");
+
+                    b.HasKey("code");
+
+                    b.ToTable("categories", (string)null);
+                });
+
             modelBuilder.Entity("PFM_project.Database.Entities.TransactionsEntity", b =>
                 {
                     b.Property<string>("id")
                         .HasColumnType("text");
 
-                    b.Property<int>("Directions")
-                        .HasColumnType("integer");
+                    b.Property<string>("Directions")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("Kind")
-                        .HasColumnType("integer");
+                    b.Property<string>("TransactionKind")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<double>("amount")
                         .HasColumnType("double precision");
@@ -39,13 +57,16 @@ namespace PFMproject.Migrations
                     b.Property<string>("beneficiaryname")
                         .HasColumnType("text");
 
+                    b.Property<string>("catcode")
+                        .HasColumnType("text");
+
                     b.Property<string>("currency")
                         .IsRequired()
                         .HasMaxLength(3)
                         .HasColumnType("character varying(3)");
 
-                    b.Property<DateOnly>("date")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("date")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("description")
                         .HasColumnType("text");
@@ -55,7 +76,18 @@ namespace PFMproject.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("catcode");
+
                     b.ToTable("transactions", (string)null);
+                });
+
+            modelBuilder.Entity("PFM_project.Database.Entities.TransactionsEntity", b =>
+                {
+                    b.HasOne("PFM_project.Database.Entities.CategoryEntity", "Category")
+                        .WithMany()
+                        .HasForeignKey("catcode");
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

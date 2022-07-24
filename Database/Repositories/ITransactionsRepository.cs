@@ -6,7 +6,8 @@ namespace PFM_project.Database.Repositories
     public interface ITransactionsRepository
     {
         Task<TransactionsEntity> Get(string id);
+        Task<TransactionsEntity> Update(TransactionsEntity entity);
         Task<TransactionsEntity> Create (TransactionsEntity entity);
-        Task<PagedSortedList<TransactionsEntity>> List(TransactionKind kind, DateOnly start, DateOnly end, int page = 1, int pageSize = 5, string sortBy = null, SortOrder sortOrder = SortOrder.Asc);
+        Task<PagedSortedList<TransactionsEntity>> List(TransactionKind kind, DateTime start, DateTime end, int page = 1, int pageSize = 5, string sortBy = null, SortOrder sortOrder = SortOrder.Asc);
     }
 }

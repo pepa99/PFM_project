@@ -19,15 +19,21 @@ namespace PFM_project.Database.Repositories
 
             return product;        
         }
+        public async Task<TransactionsEntity> Update(TransactionsEntity entity)
+        {
+            _context.Update(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
 
         public async Task<TransactionsEntity> Get(string id)
         {
             return await _context.Transactions.FirstOrDefaultAsync(p => p.id == id);
         }
 
-        public async Task<PagedSortedList<TransactionsEntity>> List(TransactionKind kind,DateOnly start, DateOnly end, int page = 1, int pageSize = 5, string sortBy = null, SortOrder sortOrder = SortOrder.Asc)
+        public async Task<PagedSortedList<TransactionsEntity>> List(TransactionKind kind,DateTime start, DateTime end, int page = 1, int pageSize = 5, string sortBy = null, SortOrder sortOrder = SortOrder.Asc)
         {
-            var query = _context.Transactions.Where(p => p.Kind == kind && start<=p.date && p.date<=end).AsQueryable();
+            var query = _context.Transactions.Where(p => p.TransactionKind == kind && start<=p.date && p.date<=end).AsQueryable();
 
             var totalCount = query.Count();
 
