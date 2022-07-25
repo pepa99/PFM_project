@@ -70,5 +70,39 @@ namespace PFM_project.Database.Repositories
                 SortOrder = sortOrder
             };
         }
+
+        public async Task<SpendingInCategory> GetByCat(string catcode, DateTime start, DateTime end, Directions direction)
+        {
+            var query = _context.Transactions.Where(p => p.catcode == catcode && start<=p.date && p.date<=end && p.Directions==direction).AsQueryable();
+            int total=query.Count();
+            var items=await query.ToListAsync();
+            double amount=0;
+            foreach(var elem in items)
+            {
+                amount+=elem.amount;
+            }
+            SpendingInCategory result=new SpendingInCategory();
+            result.catcode=catcode;
+            result.amount=amount;
+            result.count=total;
+            return result;
+        }
+
+        public async Task<TransactionCategoryMapping> CreateSplit(TransactionCategoryMapping junction)
+        {
+           
+            _context.TransactionCategoryMappings.Add(junction);
+             await _context.SaveChangesAsync();
+             return junction;
+        }
+        public async Task RemoveSplit(string id)
+        {
+           var lista= _context.TransactionCategoryMappings.Where(p=>p.TransactionID==id).AsQueryable().ToList();
+           foreach(var elem in lista)
+           {
+            _context.TransactionCategoryMappings.Remove(elem);
+           }
+           await _context.SaveChangesAsync();
+        }
     }
 }

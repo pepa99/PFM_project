@@ -38,6 +38,29 @@ namespace PFMproject.Migrations
                     b.ToTable("categories", (string)null);
                 });
 
+            modelBuilder.Entity("PFM_project.Database.Entities.TransactionCategoryMapping", b =>
+                {
+                    b.Property<DateTime>("vreme")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TransactionID")
+                        .HasColumnType("text");
+
+                    b.Property<double>("amount")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("vreme");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("TransactionID");
+
+                    b.ToTable("junction", (string)null);
+                });
+
             modelBuilder.Entity("PFM_project.Database.Entities.TransactionsEntity", b =>
                 {
                     b.Property<string>("id")
@@ -74,11 +97,29 @@ namespace PFMproject.Migrations
                     b.Property<int>("mcc")
                         .HasColumnType("integer");
 
+                    b.Property<string>("splits")
+                        .HasColumnType("text");
+
                     b.HasKey("id");
 
                     b.HasIndex("catcode");
 
                     b.ToTable("transactions", (string)null);
+                });
+
+            modelBuilder.Entity("PFM_project.Database.Entities.TransactionCategoryMapping", b =>
+                {
+                    b.HasOne("PFM_project.Database.Entities.CategoryEntity", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("PFM_project.Database.Entities.TransactionsEntity", "Transaction")
+                        .WithMany()
+                        .HasForeignKey("TransactionID");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("PFM_project.Database.Entities.TransactionsEntity", b =>

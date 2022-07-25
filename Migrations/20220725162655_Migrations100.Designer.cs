@@ -12,8 +12,8 @@ using PFM_project.Database.Repositories;
 namespace PFMproject.Migrations
 {
     [DbContext(typeof(TranasactionsDBContext))]
-    [Migration("20220724114439_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220725162655_Migrations100")]
+    partial class Migrations100
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,29 @@ namespace PFMproject.Migrations
                     b.HasKey("code");
 
                     b.ToTable("categories", (string)null);
+                });
+
+            modelBuilder.Entity("PFM_project.Database.Entities.TransactionCategoryMapping", b =>
+                {
+                    b.Property<DateTime>("vreme")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TransactionID")
+                        .HasColumnType("text");
+
+                    b.Property<double>("amount")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("vreme");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("TransactionID");
+
+                    b.ToTable("junction", (string)null);
                 });
 
             modelBuilder.Entity("PFM_project.Database.Entities.TransactionsEntity", b =>
@@ -76,11 +99,29 @@ namespace PFMproject.Migrations
                     b.Property<int>("mcc")
                         .HasColumnType("integer");
 
+                    b.Property<string>("splits")
+                        .HasColumnType("text");
+
                     b.HasKey("id");
 
                     b.HasIndex("catcode");
 
                     b.ToTable("transactions", (string)null);
+                });
+
+            modelBuilder.Entity("PFM_project.Database.Entities.TransactionCategoryMapping", b =>
+                {
+                    b.HasOne("PFM_project.Database.Entities.CategoryEntity", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("PFM_project.Database.Entities.TransactionsEntity", "Transaction")
+                        .WithMany()
+                        .HasForeignKey("TransactionID");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("PFM_project.Database.Entities.TransactionsEntity", b =>

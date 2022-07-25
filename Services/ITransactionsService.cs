@@ -11,6 +11,9 @@ namespace PFM_project.Services
     Task<Models.Transaction> CreateTransactions(CreateTransactionsCommand command);
     Task<TransactionsEntity> GetTransaction(string id);
     Task<TransactionsEntity> Update(TransactionsEntity entity);
-   }
+    Task<SpendingInCategory> GetTransactionsByCat(string catcode, DateTime start, DateTime end, Directions d);
+    Task<TransactionCategoryMapping> split(TransactionCategoryMapping junction);
+    Task RemoveSplit(string id);
+    }
 
 }

@@ -1,5 +1,6 @@
 
 using System.ComponentModel.DataAnnotations.Schema;
+using PFM_project.Commands;
 
 namespace PFM_project.Database.Entities
 {
@@ -17,5 +18,8 @@ namespace PFM_project.Database.Entities
         public string catcode{get;set;}
         [ForeignKey("catcode")]
         public CategoryEntity Category{get;set;}
+        public string splits{get;set;}
+        [NotMapped]
+        public virtual ICollection<TransactionCategoryMapping> TransactionCategoryMappings{get;set;}
     }
 }

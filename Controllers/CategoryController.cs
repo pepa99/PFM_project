@@ -40,6 +40,7 @@ namespace PFM_project.Controllers
             var errors=false;
             CategoryCsv categoryCsv=new CategoryCsv();
             string[] lista=elem.Split(",");
+            if(lista.Length<3){continue;}
             try{
             categoryCsv.code=lista[0];
             categoryCsv.name=lista[2];

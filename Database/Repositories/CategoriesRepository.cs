@@ -42,7 +42,7 @@ namespace PFM_project.Database.Repositories
            }
            else
            {
-                var query= _context.Categories.Where(p=>p.code!=parent_id).AsQueryable();
+                var query= _context.Categories.Where(p=>p.parent_code==parent_id).AsQueryable();
                 return await query.ToListAsync();
            }
         }

@@ -39,6 +39,21 @@ namespace PFM_project.Services
             var result =await _transactionsRepository.Get(id);
             return result;
         }
+        public async Task<SpendingInCategory> GetTransactionsByCat(string catcode,DateTime start, DateTime end, Directions direction)
+        {
+            return await _transactionsRepository.GetByCat(catcode,start,end,direction);
+
+        }
+
+        public async Task RemoveSplit(string id)
+        {
+            await _transactionsRepository.RemoveSplit(id);
+        }
+
+        public async Task<TransactionCategoryMapping> split(TransactionCategoryMapping junction)
+        {
+           return await  _transactionsRepository.CreateSplit(junction);
+        }
 
         public async Task<TransactionsEntity> Update(TransactionsEntity entity)
         {

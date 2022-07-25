@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PFMproject.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Migrations100 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,7 +35,8 @@ namespace PFMproject.Migrations
                     currency = table.Column<string>(type: "character varying(3)", maxLength: 3, nullable: false),
                     TransactionKind = table.Column<string>(type: "text", nullable: false),
                     mcc = table.Column<int>(type: "integer", nullable: false),
-                    catcode = table.Column<string>(type: "text", nullable: true)
+                    catcode = table.Column<string>(type: "text", nullable: true),
+                    splits = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -47,6 +48,40 @@ namespace PFMproject.Migrations
                         principalColumn: "code");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "junction",
+                columns: table => new
+                {
+                    vreme = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    TransactionID = table.Column<string>(type: "text", nullable: true),
+                    CategoryId = table.Column<string>(type: "text", nullable: true),
+                    amount = table.Column<double>(type: "double precision", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_junction", x => x.vreme);
+                    table.ForeignKey(
+                        name: "FK_junction_categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "categories",
+                        principalColumn: "code");
+                    table.ForeignKey(
+                        name: "FK_junction_transactions_TransactionID",
+                        column: x => x.TransactionID,
+                        principalTable: "transactions",
+                        principalColumn: "id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_junction_CategoryId",
+                table: "junction",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_junction_TransactionID",
+                table: "junction",
+                column: "TransactionID");
+
             migrationBuilder.CreateIndex(
                 name: "IX_transactions_catcode",
                 table: "transactions",
@@ -55,6 +90,9 @@ namespace PFMproject.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "junction");
+
             migrationBuilder.DropTable(
                 name: "transactions");
 

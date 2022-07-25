@@ -177,6 +177,41 @@ public class TransactionsController : ControllerBase
         {
             return BadRequest("There is no category with given catcode.");
         }
-        
     }
+    [HttpPost("{id}/split")]  
+    public async Task<IActionResult> SplitTransactions([FromRoute] string id,[FromBody] SplitTransactionsCommand command)
+    {
+       var transaction_entity=await _transactionsService.GetTransaction(id);  
+       if(transaction_entity==null)
+       {
+        return BadRequest("Transaction with given id doesn't exist.");
+       }   
+       double total=0;
+       string splits="";
+       await _transactionsService.RemoveSplit(id);
+       foreach(var elem in command.list)
+       {
+         total+=elem.amount;
+         splits+=elem.catcode+"("+elem.amount.ToString()+")"+",";   
+         TransactionCategoryMapping junction=new TransactionCategoryMapping();    
+         junction.TransactionID=id;
+         junction.CategoryId=elem.catcode;
+         junction.amount=elem.amount; 
+         try{ 
+            var  result = await _transactionsService.split(junction);
+           }
+         catch(Microsoft.EntityFrameworkCore.DbUpdateException e)
+         {
+            return BadRequest("There is no such category.");
+         }  
+       }
+       if(total>transaction_entity.amount)
+       {
+        return BadRequest("Bussines problem.");
+       }
+       transaction_entity.splits=splits;
+       await _transactionsService.Update(transaction_entity);
+       return Ok(transaction_entity);
+
+    } 
 }

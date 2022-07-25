@@ -9,5 +9,9 @@ namespace PFM_project.Database.Repositories
         Task<TransactionsEntity> Update(TransactionsEntity entity);
         Task<TransactionsEntity> Create (TransactionsEntity entity);
         Task<PagedSortedList<TransactionsEntity>> List(TransactionKind kind, DateTime start, DateTime end, int page = 1, int pageSize = 5, string sortBy = null, SortOrder sortOrder = SortOrder.Asc);
+        Task<SpendingInCategory> GetByCat(string catcode, DateTime start, DateTime end, Directions direction);
+        Task<TransactionCategoryMapping> CreateSplit(TransactionCategoryMapping junction);
+        Task RemoveSplit(string id);
+
     }
 }
