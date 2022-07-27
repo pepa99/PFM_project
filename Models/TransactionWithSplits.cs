@@ -1,3 +1,4 @@
+using PFM_project.Commands;
 using PFM_project.Database.Entities;
 
 namespace PFM_project.Models
@@ -14,6 +15,6 @@ namespace PFM_project.Models
         public MccCodeEnum mcc{get;set;}
         public TransactionKind TransactionKind{get;set;}
         public  string catcode;
-        public List<SpendingInCategory> list{get;set;}
+        public List<SingleCategorySplit> list{get;set;}
     }
 }

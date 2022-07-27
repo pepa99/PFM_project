@@ -24,7 +24,6 @@ namespace PFM_project.Database.Configuration
             builder.Property(p=>p.mcc);
             builder.Property(p=>p.description);
             builder.Property(p=>p.catcode);
-            builder.Property(p=>p.splits);
         }
     }
 }

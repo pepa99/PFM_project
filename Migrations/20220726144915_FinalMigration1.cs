@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PFMproject.Migrations
 {
-    public partial class Migrations100 : Migration
+    public partial class FinalMigration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,8 +35,7 @@ namespace PFMproject.Migrations
                     currency = table.Column<string>(type: "character varying(3)", maxLength: 3, nullable: false),
                     TransactionKind = table.Column<string>(type: "text", nullable: false),
                     mcc = table.Column<int>(type: "integer", nullable: false),
-                    catcode = table.Column<string>(type: "text", nullable: true),
-                    splits = table.Column<string>(type: "text", nullable: true)
+                    catcode = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

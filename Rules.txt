@@ -1,0 +1,112 @@
+rule-1:
+  title:When beneficiary name is Glovo categorize transaction as 39(Food and Dining)
+  catcode:39
+  predicate:WHERE beneficiaryname LIKE 'Glovo'
+rule-2:
+  title:When description is Food delivery categorize transaction as 71(Food and Dining)
+  catcode:39
+  predicate:WHERE description LIKE 'Food delivery'
+rule-3:
+  title:When description is Supermaket shopping transaction is 38(Groceries)
+  catcode:38
+  predicate:WHERE description LIKE 'Supermaket shopping'
+rule-4:
+  title:When beneficiary name is Lidl transaction is 38(Groceries)
+  catcode:38
+  predicate:WHERE beneficiaryname LIKE 'Lidl'
+rule-5:
+  title:When beneficiary name is Delhaize transaction is 38(Groceries)
+  catcode:38
+  predicate:WHERE beneficiaryname LIKE 'Delhaize'
+rule-6:
+  title:When mcc code is 5811 categorize transaction as 39(Restaurants)
+  catcode:39
+  predicate:WHERE mcc=5811
+rule-7:
+  title:When mcc code is 5499 categorize transaction as 38(Groceries)
+  catcode:38
+  predicate:WHERE mcc=5499
+rule-8:
+  title:When mcc code is 8050 categorize transaction as 82(Spa & Massage)
+  catcode:82
+  predicate:WHERE mcc=8050
+rule-9:
+  title:When description is Grooming transaction is 85(Grooming)
+  catcode:85
+  predicate:WHERE description LIKE 'Grooming'
+rule-9:
+  title:When description is Allowance transaction is 67(Allowance)
+  catcode:67
+  predicate:WHERE description LIKE 'Allowance'
+rule-10:
+  title:When description is Cleaning transaction is 55(Home services)
+  catcode:55
+  predicate:WHERE description LIKE 'Cleaning'
+rule-11:
+  title:When description is ATM withdrawal fee transaction is 25(ATM fee)
+  catcode:25
+  predicate:WHERE description LIKE 'ATM withdrawal fee'
+rule-12:
+  title:When description is Late fee transaction is 28(Late fee)
+  catcode:28
+  predicate:WHERE description LIKE 'Late fee'
+rule-13:
+  title:When description is Tuition transaction is 17(Tuition)
+  catcode:17
+  predicate:WHERE description LIKE 'Tuition'
+rule-14:
+  title:When description is Parking fee transaction is 5(Parking)
+  catcode:5
+  predicate:WHERE description LIKE 'Parking fee'
+rule-15:
+  title:When description is Parking fee transaction is 11(Mobile phone bill)
+  catcode:11
+  predicate:WHERE description LIKE 'Mobile phone bill'
+rule-16:
+  title:When description is Parking fee transaction is 12(Television bill)
+  catcode:12
+  predicate:WHERE description LIKE 'Television bill'
+rule-17:
+  title:When description is Parking fee transaction is 9(Home Phone bill)
+  catcode:9
+  predicate:WHERE description LIKE 'Phone bill'
+rule-18:
+  title:When description is Taxi transaction is 105(Car rent & Taxi)
+  catcode:105
+  predicate:WHERE description LIKE 'Taxi'
+rule-19:
+  title:When description is Car rent transaction is 105(Car rent & Taxi)
+  catcode:105
+  predicate:WHERE description LIKE 'Car rent'
+rule-20:
+  title:When description is Gym membership transaction is 47(Gym)
+  catcode:47
+  predicate:WHERE description LIKE 'Gym membership'
+rule-21:
+  title:When description is Hair transaction is 80(Hair)
+  catcode:80
+  predicate:WHERE description LIKE 'Hair%'
+rule-22:
+  title:When description is Book transaction is 88(Books)
+  catcode:88
+  predicate:WHERE description LIKE 'Book%'
+rule-23:
+  title:When beneficiary name is Book categorize transaction as 88(Books)
+  catcode:88
+  predicate:WHERE beneficiaryname LIKE 'Book%'
+rule-24:
+  title:When description is Medicine transaction is 49(Pharmacy)
+  catcode:49
+  predicate:WHERE description LIKE 'Medicine'
+rule-25:
+  title:When description is Loan payment transaction is 77(Loan Payment)
+  catcode:77
+  predicate:WHERE description LIKE 'Loan Payment'
+rule-26:
+  title:When description is Games transaction is 90(Electronics & Software)
+  catcode:90
+  predicate:WHERE description LIKE 'Games'
+rule-27:
+  title:When description is Gasoline purchases transaction is 4(Gasoline and fuel)
+  catcode:4
+  predicate:WHERE description LIKE 'Gasoline purchases'

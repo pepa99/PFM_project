@@ -13,6 +13,6 @@ namespace PFM_project.Models
         public string currency{get;set;}
         public MccCodeEnum mcc{get;set;}
         public TransactionKind TransactionKind{get;set;}
-        public readonly string catcode;
+        public string catcode;
     }
 }

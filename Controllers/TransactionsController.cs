@@ -40,7 +40,8 @@ public class TransactionsController : ControllerBase
             {
               Error error=new Error();
               error.tag="start";
-              error.error="Start date format is wrong.";
+              error.error=ErrorEnum.invalid_format;
+              error.message="Start date format is wrong.";
               lista.Add(error);
             }
             try
@@ -51,7 +52,8 @@ public class TransactionsController : ControllerBase
             {
                 Error error=new Error();
                 error.tag="end";
-                error.error="End date format is wrong";
+                error.error=ErrorEnum.invalid_format;
+                error.message="End date format is wrong";
                 lista.Add(error);
             } 
             TransactionKind kind=new TransactionKind();
@@ -63,7 +65,8 @@ public class TransactionsController : ControllerBase
             {
                 Error error=new Error();
                 error.tag="kind";
-                error.error="Transaction kind is not supported.";
+                error.error=ErrorEnum.unknown_enum;
+                error.message="Transaction kind is not supported.";
                 lista.Add(error);
             }
             if(lista.Count>0)
@@ -149,50 +152,85 @@ public class TransactionsController : ControllerBase
             }
            
         }
-        return Ok(greske);
+        return Ok();
     }
     [HttpPost("{id}/categorize")]
     //[Consumes("application/json")]
-    public async Task<IActionResult> Categorize([FromRoute] string id,[FromQuery] string catcode)
+    public async Task<IActionResult> Categorize([FromRoute] string id,[FromBody] string catcode)
     {
         var  transaction_entity= await _transactionsService.GetTransaction(id);
         if(transaction_entity==null)
         {
-            return BadRequest(id);
-        }
-        //HttpClient client=new HttpClient();
-        //string URL="https://localhost:7087/categories";
-        //client.BaseAddress=new Uri(URL);
-        //string parameters="?parent_id="+catcode.ToString();
-         //client.DefaultRequestHeaders.Accept.Add(
-         //   new MediaTypeWithQualityHeaderValue("application/json"));
-        //var response = client.GetAsync(parameters).Result; 
+            Error error=new Error();
+            error.tag="id";
+            error.error=ErrorEnum.not_on_list;
+            error.message="There is no transaction with given id.";
+            return BadRequest(error);
+        } 
         transaction_entity.catcode=catcode;
         try
         {
             await _transactionsService.Update(transaction_entity);
-            return Ok(transaction_entity);
+            return Ok();
         }
         catch(Exception e)
         {
-            return BadRequest("There is no category with given catcode.");
+            Error error=new Error();
+            error.tag="catcode";
+            error.error=ErrorEnum.not_on_list;
+            error.message="There is no category with given catcode.";
+            return BadRequest(error);
         }
     }
     [HttpPost("{id}/split")]  
     public async Task<IActionResult> SplitTransactions([FromRoute] string id,[FromBody] SplitTransactionsCommand command)
     {
+       List<Error> erori=new List<Error>(); 
        var transaction_entity=await _transactionsService.GetTransaction(id);  
        if(transaction_entity==null)
        {
-        return BadRequest("Transaction with given id doesn't exist.");
-       }   
+            Error error=new Error();
+            error.tag="id";
+            error.error=ErrorEnum.not_on_list;
+            error.message="There is no such transaction.";
+            erori.Add(error);       
+        }   
        double total=0;
-       string splits="";
-       await _transactionsService.RemoveSplit(id);
+       foreach(var elem in command.list)
+       {
+        total+=elem.amount;
+        var nadjen=false;
+        foreach(var elem12 in Controllers.CategoryController.kategorije)
+        {
+           if(elem12==elem.catcode)
+           {
+             nadjen=true;
+           } 
+        }
+        if(nadjen==false)
+        {
+            Error error=new Error();
+            error.tag="catcode";
+            error.error=ErrorEnum.not_on_list;
+            error.message="There is no such categry.";
+            erori.Add(error);
+
+        }
+       }
+       if(erori.Count()>0){return BadRequest(erori);}
+       if(total>transaction_entity.amount)
+       {
+            Error error=new Error();
+            error.tag="amount";
+            error.error=ErrorEnum.out_of_range;
+            error.message="Bussines problem (Total amount is greater than it should be.)";
+            return StatusCode(440, error);       
+        }
+        var lista=await _transactionsService.RemoveSplit(id);
+       var greska=false;
        foreach(var elem in command.list)
        {
          total+=elem.amount;
-         splits+=elem.catcode+"("+elem.amount.ToString()+")"+",";   
          TransactionCategoryMapping junction=new TransactionCategoryMapping();    
          junction.TransactionID=id;
          junction.CategoryId=elem.catcode;
@@ -202,16 +240,38 @@ public class TransactionsController : ControllerBase
            }
          catch(Microsoft.EntityFrameworkCore.DbUpdateException e)
          {
-            return BadRequest("There is no such category.");
+            greska=true;
+         }
+         if(greska==true)
+         {
+            Error error=new Error();
+            error.tag="catcode";
+            error.error=ErrorEnum.not_on_list;
+            error.message="There is no such categry.";
+            //try{
+            //var rez=await _transactionsService.RemoveSplit(id);
+            //}
+            //catch(Exception e)
+            //{}
+            foreach(var elem1 in lista)
+            {
+                try{
+                await _transactionsService.split(elem1);
+                }
+                catch(Exception e)
+                {}
+            }
+            return BadRequest(error);
          }  
        }
-       if(total>transaction_entity.amount)
-       {
-        return BadRequest("Bussines problem.");
-       }
-       transaction_entity.splits=splits;
-       await _transactionsService.Update(transaction_entity);
+       //await _transactionsService.Update(transaction_entity);
        return Ok(transaction_entity);
 
-    } 
+    }
+    [HttpPost("auto-categorize")] 
+    public async Task<IActionResult> AutoCategorize()
+    {
+         await _transactionsService.AutoCategorize();
+         return Ok();
+    }
 }

@@ -21,11 +21,7 @@ namespace PFM_project.Services
         {
             var entity = _mapper.Map<CategoryEntity>(categoryCsv);
 
-            var existingProduct = await _repository.Get(categoryCsv.code);
-            if (existingProduct != null)
-            {
-                return null;
-            }
+           
             var result = await _repository.Create(entity);
 
             return _mapper.Map<Category>(result);

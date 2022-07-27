@@ -12,8 +12,8 @@ using PFM_project.Database.Repositories;
 namespace PFMproject.Migrations
 {
     [DbContext(typeof(TranasactionsDBContext))]
-    [Migration("20220725162655_Migrations100")]
-    partial class Migrations100
+    [Migration("20220726144915_FinalMigration1")]
+    partial class FinalMigration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,9 +98,6 @@ namespace PFMproject.Migrations
 
                     b.Property<int>("mcc")
                         .HasColumnType("integer");
-
-                    b.Property<string>("splits")
-                        .HasColumnType("text");
 
                     b.HasKey("id");
 

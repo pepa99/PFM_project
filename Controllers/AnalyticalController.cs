@@ -17,8 +17,39 @@ namespace PFM_project.Commands
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAnalytics([FromQuery] string catcode,[FromQuery] DateTime start,[FromQuery] DateTime end,[FromQuery] Directions direction)
+        public async Task<IActionResult> GetAnalytics([FromQuery] string catcode,[FromQuery] string starts,[FromQuery] string ends,[FromQuery] Directions direction)
         {
+            List<Error> lista=new List<Error>();
+            DateTime start=new DateTime();
+            DateTime end=new DateTime();
+            try
+            {
+             start=DateTime.Parse(starts);
+            }
+            catch(Exception e)
+            {
+              Error error=new Error();
+              error.tag="start";
+              error.error=ErrorEnum.invalid_format;
+              error.message="Start date format is wrong.";
+              lista.Add(error);
+            }
+            try
+            {
+             end=DateTime.Parse(ends);
+            }
+            catch(Exception e)
+            {
+                Error error=new Error();
+                error.tag="end";
+                error.error=ErrorEnum.invalid_format;
+                error.message="End date format is wrong";
+                lista.Add(error);
+            } 
+            if(lista.Count()>0)
+            {
+                return BadRequest(lista);
+            }
             var result= await _transactionsService.GetTransactionsByCat(catcode,start,end,direction);
             return Ok(result);
              

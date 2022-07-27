@@ -97,9 +97,6 @@ namespace PFMproject.Migrations
                     b.Property<int>("mcc")
                         .HasColumnType("integer");
 
-                    b.Property<string>("splits")
-                        .HasColumnType("text");
-
                     b.HasKey("id");
 
                     b.HasIndex("catcode");

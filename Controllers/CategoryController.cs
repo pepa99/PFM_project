@@ -8,6 +8,8 @@ namespace PFM_project.Controllers
     [Route("categories")]
     public class CategoryController:ControllerBase
     {
+        public static List<string> kategorije=new List<string>();
+
         private readonly ICategoryService _categoryService;
         private readonly ILogger<CategoryController> _logger;
         public CategoryController(ICategoryService service, ILogger<CategoryController> logger)
@@ -43,6 +45,7 @@ namespace PFM_project.Controllers
             if(lista.Length<3){continue;}
             try{
             categoryCsv.code=lista[0];
+            kategorije.Add(lista[0]);
             categoryCsv.name=lista[2];
             categoryCsv.parent_code=lista[1];
             await _categoryService.Create(categoryCsv);
@@ -53,7 +56,7 @@ namespace PFM_project.Controllers
 
             }
         }
-        return Ok(result);
+        return Ok();
     }
     [HttpGet]
     public async Task<IActionResult> GetCategories([FromQuery] string parent_id)

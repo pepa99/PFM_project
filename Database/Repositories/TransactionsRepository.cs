@@ -1,5 +1,8 @@
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PFM_project.Database.Entities;
+using PFM_project.Mappings;
 using PFM_project.Models;
 
 namespace PFM_project.Database.Repositories
@@ -31,7 +34,7 @@ namespace PFM_project.Database.Repositories
             return await _context.Transactions.FirstOrDefaultAsync(p => p.id == id);
         }
 
-        public async Task<PagedSortedList<TransactionsEntity>> List(TransactionKind kind,DateTime start, DateTime end, int page = 1, int pageSize = 5, string sortBy = null, SortOrder sortOrder = SortOrder.Asc)
+        public async Task<PagedSortedList<TransactionWithSplits>> List(TransactionKind kind,DateTime start, DateTime end, int page = 1, int pageSize = 5, string sortBy = null, SortOrder sortOrder = SortOrder.Asc)
         {
             var query = _context.Transactions.Where(p => p.TransactionKind == kind && start<=p.date && p.date<=end).AsQueryable();
 
@@ -58,14 +61,37 @@ namespace PFM_project.Database.Repositories
             query = query.Skip((page - 1) * pageSize).Take(pageSize);
 
             var items = await query.ToListAsync();
+            var solution=new List<TransactionWithSplits>();
+            foreach(var elem in items)
+            { 
+              TransactionWithSplits transactionWithSplits=new TransactionWithSplits();
+              transactionWithSplits.id=elem.id;
+              transactionWithSplits.beneficiaryname=elem.beneficiaryname;
+              transactionWithSplits.date=elem.date;
+              transactionWithSplits.catcode=elem.catcode;
+              transactionWithSplits.currency=elem.currency;
+              transactionWithSplits.amount=elem.amount; 
+              transactionWithSplits.TransactionKind=elem.TransactionKind;
+              transactionWithSplits.Directions=elem.Directions;
+              transactionWithSplits.mcc=elem.mcc;
+              transactionWithSplits.description=elem.description;
+              var splits=new List<SingleCategorySplit>();  
+              var query1=await _context.TransactionCategoryMappings.Where(p=>p.TransactionID==elem.id).AsQueryable().ToListAsync();
+              foreach(var elem1 in query1)
+              {
+               splits.Add(new SingleCategorySplit(elem1.CategoryId,elem1.amount)); 
+              }
+              transactionWithSplits.list=splits;
+              solution.Add(transactionWithSplits);
+            }
 
-            return new PagedSortedList<TransactionsEntity>
+            return new PagedSortedList<TransactionWithSplits>
             {
                 Page = page,
                 PageSize = pageSize,
                 TotalCount = totalCount,
                 TotalPages = totalPages,
-                Items = items,
+                Items = solution,
                 SortBy = sortBy,
                 SortOrder = sortOrder
             };
@@ -91,18 +117,36 @@ namespace PFM_project.Database.Repositories
         public async Task<TransactionCategoryMapping> CreateSplit(TransactionCategoryMapping junction)
         {
            
-            _context.TransactionCategoryMappings.Add(junction);
+            await _context.TransactionCategoryMappings.AddAsync(junction);
              await _context.SaveChangesAsync();
              return junction;
         }
-        public async Task RemoveSplit(string id)
+        public async Task<List<TransactionCategoryMapping>> RemoveSplit(string id)
         {
+           var result=new List<TransactionCategoryMapping>(); 
            var lista= _context.TransactionCategoryMappings.Where(p=>p.TransactionID==id).AsQueryable().ToList();
            foreach(var elem in lista)
            {
-            _context.TransactionCategoryMappings.Remove(elem);
+            result.Add(elem);
+             _context.TransactionCategoryMappings.Remove(elem);
+
            }
            await _context.SaveChangesAsync();
+           return result;
+        }
+
+        public async Task AutoCategorize()
+        {
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Instructor\Desktop\PFM-project\PFM_project\Rules.txt");
+            
+            int n=Convert.ToInt32(lines.Length/4);
+            for(int i=0;i<n;i++)
+            {
+             string code=lines[i*4+2].Split(":")[1];
+             string query=lines[i*4+3].Split(":")[1];   
+             var result=_context.Database.ExecuteSqlRaw("UPDATE public.transactions \r\n"+ "SET catcode="+code+"\r\n"+query+" AND catcode is null"+";");
+             await _context.SaveChangesAsync();
+            }
         }
     }
 }
