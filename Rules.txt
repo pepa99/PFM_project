@@ -110,3 +110,47 @@ rule-27:
   title:When description is Gasoline purchases transaction is 4(Gasoline and fuel)
   catcode:4
   predicate:WHERE description LIKE 'Gasoline purchases'
+rule-28:
+  title:When description is Salary purchases transaction is 62(Paycheck)
+  catcode:62
+  predicate:WHERE description LIKE 'Salary'
+rule-29:
+  title:When description is Pay with transaction is 100(Credit card payment)
+  catcode:100
+  predicate:WHERE description LIKE 'Pay with%'
+rule-30:
+  title:When description is Doctor transaction is 45(Doctor)
+  catcode:45
+  predicate:WHERE description LIKE 'Doctor%'
+rule-31:
+  title:When description is Extended health insurance transaction is 48(Health insurance)
+  catcode:48
+  predicate:WHERE description LIKE 'Extended health insurance'
+rule-32:
+  title:When description is Extended health insurance transaction is 33(Life insurance premium)
+  catcode:33
+  predicate:WHERE description LIKE 'Life insurance premium'
+rule-32:
+  title:When description is Charity transaction is 41(Charity)
+  catcode:41
+  predicate:WHERE description LIKE 'Charity'
+rule-33:
+  title:When description is Parking fee transaction is 10(Internet bill)
+  catcode:10
+  predicate:WHERE description LIKE 'Internet bill'
+rule-34:
+  title:When description is ATM withdrawal fee transaction is 59(Other)
+  catcode:59
+  predicate:WHERE description LIKE 'ATM withdrawal'
+rule-35:
+  title:When description is Baby fee transaction is 68(Baby supplies)
+  catcode:68
+  predicate:WHERE description LIKE 'Baby%'
+rule-36:
+  title:When beneficiary name is Hulu categorize transaction as 21(Movies)
+  catcode:21
+  predicate:WHERE beneficiaryname LIKE 'Hulu'
+rule-35:
+  title:When description is Baby fee transaction is 26(Bank fee)
+  catcode:26
+  predicate:WHERE description LIKE 'Online banking fee'
