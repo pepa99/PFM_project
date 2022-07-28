@@ -150,7 +150,7 @@ rule-36:
   title:When beneficiary name is Hulu categorize transaction as 21(Movies)
   catcode:21
   predicate:WHERE beneficiaryname LIKE 'Hulu'
-rule-35:
+rule-37:
   title:When description is Baby fee transaction is 26(Bank fee)
   catcode:26
   predicate:WHERE description LIKE 'Online banking fee'
