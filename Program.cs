@@ -16,7 +16,18 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
+        //CORS1-START
+         var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+         builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder.WithOrigins("http://localhost:59919/transactions",
+                                              "http://localhost:59919");
+                      });
+});
+        //CORS1END
         // Add services to the container.
         builder.Services.AddScoped<ITransactionsService, TransactionsService>();
         builder.Services.AddScoped<ICategoryService,CategoryService>();
@@ -50,6 +61,13 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        //CORS2
+        app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseCors(MyAllowSpecificOrigins);
+        //CORS2END
 
         app.UseAuthorization();
 
