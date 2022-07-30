@@ -1045,11 +1045,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Instructor\\Desktop\\PFM-project\\PFM_project\\PFM-project.csproj",
+      "projectUniqueName": "C:\\Users\\Instructor\\Desktop\\PFM-project\\PFM_project\\PFM-project.csproj",
       "projectName": "PFM-project",
-      "projectPath": "c:\\Users\\Instructor\\Desktop\\PFM-project\\PFM_project\\PFM-project.csproj",
+      "projectPath": "C:\\Users\\Instructor\\Desktop\\PFM-project\\PFM_project\\PFM-project.csproj",
       "packagesPath": "C:\\Users\\Instructor\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Instructor\\Desktop\\PFM-project\\PFM_project\\obj\\",
+      "outputPath": "C:\\Users\\Instructor\\Desktop\\PFM-project\\PFM_project\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Instructor\\AppData\\Roaming\\NuGet\\NuGet.Config"

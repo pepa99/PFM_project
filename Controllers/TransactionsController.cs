@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using System.Text;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PFM_project.Commands;
 using PFM_project.Database.Entities;
@@ -163,7 +164,7 @@ public class TransactionsController : ControllerBase
         return Ok();
     }
     [HttpPost("{id}/categorize")]
-    //[Consumes("application/json")]
+    [Consumes("application/json")]
     public async Task<IActionResult> Categorize([FromRoute] string id,[FromBody] string catcode)
     {
         var  transaction_entity= await _transactionsService.GetTransaction(id);
