@@ -14,7 +14,7 @@ namespace PFM_project.Models
         public string currency{get;set;}
         public MccCodeEnum mcc{get;set;}
         public TransactionKind TransactionKind{get;set;}
-        public  string catcode;
+        public  string catcode{get;set;}
         public List<SingleCategorySplit> list{get;set;}
     }
 }

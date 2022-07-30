@@ -62,3 +62,9 @@ C:\Users\Instructor\Desktop\PFM-project\PFM_project\bin\Debug\net6.0\Npgsql.dll
 C:\Users\Instructor\Desktop\PFM-project\PFM_project\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\Instructor\Desktop\PFM-project\PFM_project\bin\Debug\net6.0\Humanizer.dll
 C:\Users\Instructor\Desktop\PFM-project\PFM_project\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Instructor\Desktop\PFM-project\PFM_project\bin\Debug\net6.0\Frontend\angular.json
+C:\Users\Instructor\Desktop\PFM-project\PFM_project\bin\Debug\net6.0\Frontend\package-lock.json
+C:\Users\Instructor\Desktop\PFM-project\PFM_project\bin\Debug\net6.0\Frontend\package.json
+C:\Users\Instructor\Desktop\PFM-project\PFM_project\bin\Debug\net6.0\Frontend\tsconfig.app.json
+C:\Users\Instructor\Desktop\PFM-project\PFM_project\bin\Debug\net6.0\Frontend\tsconfig.json
+C:\Users\Instructor\Desktop\PFM-project\PFM_project\bin\Debug\net6.0\Frontend\tsconfig.spec.json

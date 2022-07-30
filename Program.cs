@@ -23,8 +23,8 @@ public class Program
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       builder =>
                       {
-                          builder.WithOrigins("http://localhost:59919/transactions",
-                                              "http://localhost:59919");
+                          builder.WithOrigins("http://localhost:4200/transactions",
+                                              "http://localhost:4200");
                       });
 });
         //CORS1END

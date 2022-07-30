@@ -50,6 +50,12 @@ namespace PFM_project.Database.Repositories
                     case "id":
                         query = sortOrder == SortOrder.Asc ? query.OrderBy(x => x.id) : query.OrderByDescending(x => x.id);
                         break;
+                    case "date":
+                          query = sortOrder == SortOrder.Asc ? query.OrderBy(x => x.date) : query.OrderByDescending(x => x.date);
+                          break;
+                    case "kind":
+                        query = sortOrder == SortOrder.Asc ? query.OrderBy(x => x.TransactionKind) : query.OrderByDescending(x => x.TransactionKind);
+                        break;     
                     
                 }
             } 
@@ -75,6 +81,7 @@ namespace PFM_project.Database.Repositories
               transactionWithSplits.Directions=elem.Directions;
               transactionWithSplits.mcc=elem.mcc;
               transactionWithSplits.description=elem.description;
+              transactionWithSplits.catcode=elem.catcode;
               var splits=new List<SingleCategorySplit>();  
               var query1=await _context.TransactionCategoryMappings.Where(p=>p.TransactionID==elem.id).AsQueryable().ToListAsync();
               foreach(var elem1 in query1)

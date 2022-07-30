@@ -32,6 +32,14 @@ public class TransactionsController : ControllerBase
             List<Error> lista=new List<Error>();
             DateTime start=new DateTime();
             DateTime end=new DateTime();
+            if(starts==null)
+            {
+                starts="1/1/1900";
+            }
+            if(ends==null)
+            {
+                ends="1/1/2023";
+            }
             try
             {
              start=DateTime.Parse(starts);
