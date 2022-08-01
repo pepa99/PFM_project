@@ -155,5 +155,36 @@ namespace PFM_project.Database.Repositories
              await _context.SaveChangesAsync();
             }
         }
+
+        public async Task MLCategorize()
+        {
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Instructor\Desktop\PFM-project\PFM_project\ml.txt");
+            int n=lines.Length;
+            for(int i=0;i<n;i++)
+            {
+                string code=lines[i].Split(":")[1];
+                string id=lines[i].Split(":")[0];
+                string command="UPDATE public.transactions \r\n"+"SET catcode="+code+"\r\n"+"WHERE id='"+id+"'";
+                
+                _context.Database.ExecuteSqlRaw(command);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<float> ValidateAccuracy(List<string> ind, List<string> code)
+        {
+            int n=ind.Count();
+            int sum=0;
+            for(int i=0;i<n;i++)
+            {
+                var tran=await _context.Transactions.FirstOrDefaultAsync(p=>p.id==ind[i]);
+                var code_db=tran.catcode;
+                if(code_db==code[i])
+                {
+                    sum+=1;
+                }
+            }
+            return (100*sum/n);
+        }
     }
 }

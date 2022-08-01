@@ -6,6 +6,8 @@ using PFM_project.Commands;
 using PFM_project.Database.Entities;
 using PFM_project.Models;
 using PFM_project.Services;
+using IronPython.Hosting;
+using Microsoft.Scripting.Hosting;
 
 namespace PFM_project.Controllers;
 
@@ -221,7 +223,7 @@ public class TransactionsController : ControllerBase
             Error error=new Error();
             error.tag="catcode";
             error.error=ErrorEnum.not_on_list;
-            error.message="There is no such categry.";
+            error.message="There is no such category ("+elem.catcode+")";
             erori.Add(error);
 
         }
@@ -283,4 +285,44 @@ public class TransactionsController : ControllerBase
          await _transactionsService.AutoCategorize();
          return Ok();
     }
+    [HttpPost("machine-learning-categorize")]
+    public async Task<IActionResult> MLCategorize()
+    {
+        await _transactionsService.MLCategorize();
+        return Ok();
+    }
+    [HttpPost("validate-accuracy")]
+    public async Task<IActionResult> ValidateAccuracy()
+    {
+        StreamReader reader=  new StreamReader(Request.Body);
+        List<string> result= new List<string>();
+        int i=0;
+        string line="";
+        List<String> greske=new List<string>();
+        while ((line = await reader.ReadLineAsync()) != null)
+                {
+                    i+=1;
+                    result.Add(line);
+                }
+        var j=0; 
+        List<string> ind=new List<string>();
+        List<string> code=new List<string>();  
+        foreach(string elem in result)
+        {
+            j+=1;
+            if(j<6)
+            {
+                continue;
+            }
+            if(elem.Split(",").Length<2){continue;}
+            try{
+            ind.Add(elem.Split(",")[0]);
+            code.Add(elem.Split(",")[1]);
+            }catch(Exception e)
+            {}
+        }    
+        var sol=await _transactionsService.ValidateAccuracy(ind,code);
+        return Ok(sol);
+    }
+
 }

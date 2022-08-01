@@ -52,6 +52,11 @@ namespace PFM_project.Services
 
         }
 
+        public async Task MLCategorize()
+        {
+            await _transactionsRepository.MLCategorize();
+        }
+
         public async Task<List<TransactionCategoryMapping>> RemoveSplit(string id)
         {
             return await _transactionsRepository.RemoveSplit(id);
@@ -65,6 +70,11 @@ namespace PFM_project.Services
         public async Task<TransactionsEntity> Update(TransactionsEntity entity)
         {
             return await _transactionsRepository.Update(entity);
+        }
+
+        public async Task<float> ValidateAccuracy(List<string> ind, List<string> code)
+        {
+            return await _transactionsRepository.ValidateAccuracy(ind,code);
         }
     }
 }

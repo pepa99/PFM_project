@@ -14,6 +14,7 @@ namespace PFM_project.Database.Repositories
         Task<TransactionCategoryMapping> CreateSplit(TransactionCategoryMapping junction);
         Task AutoCategorize();
         Task<List<TransactionCategoryMapping>> RemoveSplit(string id);
-
+        Task MLCategorize();
+        Task<float> ValidateAccuracy(List<string> ind, List<string> code);
     }
 }
