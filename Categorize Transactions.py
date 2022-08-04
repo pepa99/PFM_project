@@ -19,14 +19,14 @@ def train():
  Y=[]
  f=open(r'C:\Users\Instructor\Desktop\PFM-project\PFM_project\transactions.csv')
  f2=open(r'C:\Users\Instructor\Desktop\PFM-project\PFM_project\train_labels.csv')
- text=f.readlines()[1:1000]
+ text=f.readlines()[1:1304]
  prva=[]
  druga=[]
  treca=[]
 
  pom1=[]
  pom2=[]
- labels=f2.readlines()[1:1000]
+ labels=f2.readlines()[1:]
  i=0
  pom3=[]
  ind=[]
@@ -45,11 +45,8 @@ def train():
  i=0  
  y_test=[]
  for lines in labels:
-    i+=1
-    if i<1000:
         Y.append(int(lines.split(",")[1]))
-    else:
-        y_test.append(int(lines.split(",")[1]))
+   
  ct = ColumnTransformer([('ohe', OneHotEncoder(), [1])], remainder='passthrough')        
  X=np.empty([len(prva),3],dtype=object)        
  X[:,0]=prva
@@ -67,7 +64,7 @@ def train():
 # In[68]:
 def test():
     f=open(r'C:\Users\Instructor\Desktop\PFM-project\PFM_project\transactions.csv')
-    text=f.readlines()[1000:1304]
+    text=f.readlines()[1:]
     prva=[]
     druga=[]
     treca=[]
